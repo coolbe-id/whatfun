@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WhatFun - Your Creative Hub</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+  <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+
+<div class="page-card donate-coffee-page">
+    <h2>Traktir Ngopi WhatFun</h2>
+    <p>Dukungan Anda dalam bentuk secangkir kopi sangat berarti bagi kami untuk tetap semangat mengembangkan WhatFun!</p>
+    <img src="https://via.placeholder.com/150x150?text=Kopi" alt="Ilustrasi Kopi" class="donate-image">
+    <div class="donate-amount-options">
+        <button class="amount-button" data-amount="20000">Rp 20.000</button>
+        <button class="amount-button" data-amount="35000">Rp 35.000</button>
+        <button class="amount-button" data-amount="50000">Rp 50.000</button>
+    </div>
+    <input type="number" id="coffeeCustomAmount" placeholder="Atau jumlah lain (min. Rp 10.000)" min="10000" class="custom-amount-input">
+    <button class="donate-button" id="proceedCoffeeDonate"><i class="fas fa-mug-hot"></i> Traktir Sekarang</button>
+    <p class="thank-you-message">Terima kasih atas kopi Anda! ☕</p>
+</div>
+
+  <script src="script.js"></script>

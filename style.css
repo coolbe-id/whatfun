@@ -1,0 +1,1281 @@
+/* Universal Box-Sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary-bg: #f0f2f5; /* Light background for the overall page */
+    --secondary-bg: #ffffff; /* Card backgrounds, modals */
+    --tertiary-bg: #e4e6eb; /* Hover states, subtle separators */
+    --text-color: #333333; /* Main dark text */
+    --light-text-color: #606770; /* Secondary text, descriptions */
+    --border-color: #dddddd; /* Subtle borders */
+    --accent-color: #1877f2; /* Primary interactive color (e.g., blue) */
+    --accent-hover: #166fe5; /* Darker blue on hover */
+    --button-bg: var(--accent-color); /* Default button background */
+    --button-text: #ffffff; /* Default button text */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Subtle shadow for cards */
+    --error-color: #ff4d4f; /* Error messages */
+    --success-color: #52c41a; /* Success messages */
+
+    /* Dark Mode specific variables */
+    --dark-primary-bg: #18191a;
+    --dark-secondary-bg: #242526;
+    --dark-tertiary-bg: #3a3b3c;
+    --dark-text-color: #e4e6eb;
+    --dark-light-text-color: #b0b3b8;
+    --dark-border-color: #444444;
+    --dark-shadow-color: rgba(0, 0, 0, 0.4);
+    --dark-button-bg: var(--accent-color); /* Same accent for dark mode buttons */
+    --dark-button-text: #ffffff;
+}
+
+/* Base styles for dark mode */
+body.dark-mode {
+    --primary-bg: var(--dark-primary-bg);
+    --secondary-bg: var(--dark-secondary-bg);
+    --tertiary-bg: var(--dark-tertiary-bg);
+    --text-color: var(--dark-text-color);
+    --light-text-color: var(--dark-light-text-color);
+    --border-color: var(--dark-border-color);
+    --shadow-color: var(--dark-shadow-color);
+    --button-bg: var(--dark-button-bg);
+    --button-text: var(--dark-button-text);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--secondary-bg);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex; /* Make body a flex container */
+    flex-direction: column; /* Stack children vertically */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    overflow-y: scroll; /* Enable scrolling for the body */
+}
+
+/* Global Hidden Element Utility */
+.hidden-element {
+    display: none !important;
+}
+
+/* --- Header --- */
+header {
+    background-color: var(--card-bg);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    position: fixed; /* Fixed header */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+header h1 {
+    color: var(--accent-color);
+    font-size: 1.5em;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.search-bar-pc {
+    display: none; /* Hidden by default, shown on PC */
+    align-items: center;
+    background-color: var(--secondary-bg);
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
+.search-bar-pc input {
+    border: none;
+    background: transparent;
+    outline: none;
+    color: var(--text-color);
+    padding: 5px;
+    width: 180px; /* Adjust as needed */
+}
+
+.search-bar-pc button {
+    background: none;
+    border: none;
+    color: var(--light-text-color);
+    cursor: pointer;
+    padding: 5px;
+}
+
+.profile-anonymous img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid var(--border-color);
+}
+
+/* --- Main Layout Structure (Flex/Grid) --- */
+/* This is the core for PC/Tablet layout */
+.main-layout-container {
+    display: flex;
+    flex: 1; /* Allows it to grow and take available space */
+    margin-top: 60px; /* Space for fixed header */
+    padding-bottom: 60px; /* Space for fixed bottom nav on mobile */
+    position: relative; /* For z-index context if needed */
+}
+
+.main-content {
+    flex-grow: 1; /* Main content takes remaining space */
+    padding: 20px;
+    padding-top: 0; /* Adjust internal padding as main-layout-container handles top margin */
+    display: flex; /* Make main-content a flex container itself */
+    flex-direction: column; /* Stack its children vertically */
+    align-items: center; /* Center content horizontally within main-content */
+    max-width: 700px; /* Limit content width for better readability */
+    width: 100%; /* Ensure it takes full width up to max-width */
+    margin: 0 auto; /* Center the main-content block itself */
+}
+
+
+/* --- Sidebar PC --- */
+.sidebar-pc {
+    width: 250px; /* Fixed width for sidebar */
+    background-color: var(--card-bg);
+    padding: 20px 0;
+    border-right: 1px solid var(--border-color);
+    box-shadow: 2px 0 4px var(--shadow-color);
+    flex-shrink: 0; /* Prevent sidebar from shrinking */
+    position: sticky; /* Make it sticky */
+    top: 60px; /* Stick below the header */
+    height: calc(100vh - 60px); /* Take remaining viewport height */
+    overflow-y: auto; /* Enable scrolling for sidebar if content overflows */
+}
+
+.profile-anonymous-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0 20px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.profile-anonymous-sidebar img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 3px solid var(--border-color);
+}
+
+.profile-anonymous-sidebar p {
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: var(--text-color);
+    text-decoration: none;
+    gap: 15px;
+    font-size: 1.1em;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    background-color: var(--hover-bg);
+    color: var(--accent-color);
+}
+
+.sidebar-nav a i {
+    font-size: 1.3em;
+}
+
+
+/* --- Page Contents --- */
+.page-content {
+    width: 100%; /* Ensure pages take full width of main-content */
+    flex-grow: 1; /* Allow content to grow */
+    padding-top: 20px; /* Add some spacing at the top of each page */
+}
+
+.page-content.active {
+    display: block; /* Default display for active page */
+}
+
+/* specific adjustments for create-post-section */
+.create-post-section {
+    background-color: var(--card-bg);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px var(--shadow-color);
+    margin-bottom: 20px;
+    width: 100%; /* Take full width of its parent (.main-content) */
+    max-width: 600px; /* Limit width of post bar for better aesthetics */
+}
+
+.post-input-area {
+    background-color: var(--secondary-bg);
+    border-radius: 25px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    color: var(--light-text-color);
+}
+
+.post-input-area .placeholder-text {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.post-action-icons {
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid var(--border-color);
+    padding-top: 10px;
+}
+
+.icon-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--light-text-color);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.icon-item:hover {
+    background-color: var(--hover-bg);
+}
+
+.icon-item i {
+    font-size: 1.2em;
+}
+
+/* Post Card Styling (Home & Explore) */
+.post-card {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px var(--shadow-color);
+    margin-bottom: 15px;
+    width: 100%; /* Take full width of its parent */
+    max-width: 600px; /* Match create post section */
+    overflow: hidden; /* Clear floats, prevent content overflow */
+}
+
+.post-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--text-color);
+    font-size: 1.3em;
+}
+
+/* --- IMPORTANT FIXES FOR MOBILE MEDIA DISPLAY & SIZE --- */
+.post-card img,
+.post-card video {
+    width: 100% !important; /* Force to take full width of parent */
+    max-width: 100%; /* Ensures media does not overflow its container */
+    height: auto;    /* Maintains aspect ratio */
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: block;  /* Prevents extra space below images (common issue) */
+    object-fit: contain; /* Ensures the whole image/video is visible within its bounds */
+    /* If you prefer the image/video to fill the space and crop, use 'cover' */
+    /* object-fit: cover; */
+}
+/* --- END OF IMPORTANT FIXES --- */
+
+
+.post-card p {
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.post-card small {
+    color: var(--light-text-color);
+    font-size: 0.85em;
+    display: block; /* Ensure it takes its own line */
+    margin-bottom: 10px;
+}
+
+.hashtags {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.hashtags span {
+    display: inline-block;
+    background-color: var(--secondary-bg);
+    color: var(--accent-color);
+    padding: 4px 8px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.vote-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+}
+
+.vote-buttons button {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    display: flex; /* For SVG alignment */
+    align-items: center; /* For SVG alignment */
+    gap: 5px; /* Space between SVG and text */
+}
+
+.vote-buttons button:hover {
+    background-color: var(--hover-bg);
+    color: var(--accent-color);
+}
+
+.vote-buttons button svg {
+    width: 18px; /* Adjust SVG size */
+    height: 18px;
+    fill: currentColor; /* Inherit color from button text */
+}
+
+
+/* Comments Section */
+.comments-section {
+    margin-top: 20px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+}
+
+.comments-section h3 {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.comment-input-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.comment-input-bar input {
+    flex-grow: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background-color: var(--secondary-bg);
+    color: var(--text-color);
+    outline: none;
+}
+
+.comment-input-bar input::placeholder {
+    color: var(--light-text-color);
+}
+
+.comment-input-bar button {
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.comment-input-bar button:hover {
+    background-color: #1565c0; /* Darker blue */
+}
+
+.comment-list {
+    max-height: 200px; /* Limit height for scrollable comments */
+    overflow-y: auto;
+    padding-right: 5px; /* Space for scrollbar */
+}
+
+.comment {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: var(--secondary-bg);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+}
+
+.comment-content strong {
+    color: var(--accent-color);
+}
+
+.comment-content p {
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.comment-content small {
+    display: block;
+    color: var(--light-text-color);
+    font-size: 0.75em;
+}
+
+.comment-votes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.8em;
+}
+
+.comment-votes button {
+    background: none;
+    border: none;
+    color: var(--light-text-color);
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 2px 5px;
+}
+
+.comment-votes span {
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.no-comments {
+    text-align: center;
+    color: var(--light-text-color);
+    padding: 10px;
+}
+
+/* Explore Page Specific */
+.explore-search {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 600px; /* Match content width */
+}
+
+.explore-search input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background-color: var(--secondary-bg);
+    color: var(--text-color);
+    outline: none;
+}
+
+.explore-search button {
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+/* Donate Page */
+.page-card {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    text-align: center;
+    max-width: 500px;
+    margin: 20px auto; /* Center the card on page */
+}
+
+.page-card h2 {
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+.page-card p {
+    color: var(--text-color);
+    margin-bottom: 25px;
+    font-size: 1.1em;
+}
+
+.donate-options {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.donate-button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.donate-button:hover {
+    background-color: #1565c0;
+    transform: translateY(-2px);
+}
+
+/* Settings Page */
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.setting-item span {
+    font-size: 1.1em;
+    color: var(--text-color);
+}
+
+.setting-button {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.setting-button:hover {
+    background-color: var(--hover-bg);
+    color: var(--accent-color);
+}
+
+/* Dark Mode Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 28px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--accent-color);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--accent-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px);
+}
+
+/* --- Bottom Navigation (Mobile Only) --- */
+.bottom-nav {
+    background-color: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0 -2px 4px var(--shadow-color);
+    z-index: 1000;
+}
+
+.bottom-nav .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--light-text-color);
+    text-decoration: none;
+    font-size: 0.8em;
+    transition: color 0.2s ease;
+    flex: 1; /* Distribute space evenly */
+}
+
+.bottom-nav .nav-item i {
+    font-size: 1.4em;
+    margin-bottom: 3px;
+}
+
+.bottom-nav .nav-item:hover,
+.bottom-nav .nav-item.active {
+    color: var(--accent-color);
+}
+
+.bottom-nav .add-post-button {
+    font-size: 2.5em; /* Larger icon */
+    color: var(--accent-color);
+    transform: translateY(-10px); /* Lift button up */
+    background-color: var(--card-bg); /* Background to match nav */
+    border-radius: 50%;
+    padding: 0 5px;
+    box-shadow: 0 -2px 5px var(--shadow-color);
+}
+.bottom-nav .add-post-button i {
+    margin-bottom: 0; /* Remove extra margin for this specific icon */
+}
+
+
+/* --- Modal Styling --- */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 2000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    width: 90%; /* Could be 80% or 90% */
+    max-width: 600px; /* Max width for larger screens */
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh; /* Limit modal height */
+    overflow-y: auto; /* Enable scrolling if content overflows */
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h2 {
+    font-size: 1.4em;
+    color: var(--text-color);
+    flex-grow: 1;
+    text-align: center;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    color: var(--light-text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    transition: color 0.2s ease;
+}
+.back-button:hover {
+    color: var(--accent-color);
+}
+
+.upload-submit-button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.upload-submit-button:disabled {
+    background-color: var(--button-bg);
+    color: var(--light-text-color);
+    cursor: not-allowed;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex-grow: 1;
+}
+
+.modal-body input[type="text"],
+.modal-body textarea,
+.modal-body .hashtag-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--secondary-bg);
+    color: var(--text-color);
+    font-size: 1em;
+    outline: none;
+}
+
+.modal-body textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.modal-body input::placeholder,
+.modal-body textarea::placeholder {
+    color: var(--light-text-color);
+}
+
+.preview-area {
+    width: 100%;
+    background-color: var(--secondary-bg);
+    border-radius: 8px;
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    border: 1px dashed var(--border-color);
+}
+
+.preview-area img,
+.preview-area video {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.preview-area p {
+    color: var(--light-text-color);
+    text-align: center;
+}
+
+.media-upload-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.media-upload-buttons button {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.media-upload-buttons button:hover {
+    background-color: var(--hover-bg);
+}
+
+
+/* --- Utility Styles --- */
+/* FIX: Positioning for status/error messages so they don't affect layout */
+.status-message,
+.error-message {
+    /* Using fixed positions and high z-index to overlay content */
+    position: fixed;
+    top: 70px; /* Below header */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 500px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 1000; /* Higher than sidebar and other elements */
+    box-shadow: 0 2px 5px var(--shadow-color); /* Add a subtle shadow */
+}
+
+.status-message {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--accent-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+    display: block;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* --- Responsive Design --- */
+
+/* Mobile (Default - max-width 768px) */
+/* Header and bottom nav are fixed. Main content fills remaining space. */
+
+/* Header hides on non-home pages on mobile */
+.header-hidden-on-mobile-other-pages {
+    display: none !important; /* Ensure header is completely hidden */
+}
+
+
+/* Tablet (min-width 769px and max-width 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Header (fixed) will always be visible */
+    /* Bottom nav hidden, sidebar shown */
+    .bottom-nav {
+        display: none !important;
+    }
+
+    body {
+        flex-direction: row; /* Layout side-by-side */
+    }
+
+    /* Adjust margin-top for main-layout-container as header is fixed */
+    .main-layout-container {
+        margin-top: 60px; /* Space for fixed header */
+        padding-bottom: 0; /* No bottom nav on tablet */
+        display: flex; /* Ensure it's a flex container for sidebar + main-content */
+        width: 100%;
+        /* flex-wrap: nowrap; /* Prevent wrapping */
+    }
+
+    .sidebar-pc {
+        display: block !important; /* Ensure sidebar is visible */
+        width: 200px; /* Slightly smaller sidebar for tablets */
+    }
+
+    .main-content {
+        flex: 1; /* Main content takes up remaining space */
+        padding: 20px; /* Standard padding */
+        padding-top: 0;
+        margin: 0 auto; /* Center content within its flex area */
+        max-width: 800px; /* Allow wider content on tablet */
+    }
+
+    .search-bar-pc {
+        display: flex; /* Show search bar on header */
+    }
+
+    .profile-anonymous {
+        margin-right: 0; /* Adjust margin if needed */
+    }
+
+    .create-post-section,
+    .post-card,
+    .explore-search {
+        max-width: none; /* Allow full width within main-content */
+    }
+}
+
+
+/* PC (min-width 1025px) */
+@media (min-width: 1025px) {
+    /* Header (fixed) will always be visible */
+    /* Bottom nav hidden, sidebar shown */
+    .bottom-nav {
+        display: none !important;
+    }
+
+    body {
+        flex-direction: row; /* Layout side-by-side */
+    }
+
+    /* New container for sidebar and main content */
+    .main-layout-container {
+        margin-top: 60px; /* Space for fixed header */
+        padding-bottom: 0; /* No bottom nav on PC */
+        display: flex; /* Use flexbox for sidebar and main-content */
+        width: 100%;
+        /* flex-wrap: nowrap; /* Prevent wrapping */
+    }
+
+    .sidebar-pc {
+        display: block !important; /* Ensure sidebar is visible */
+        width: 250px; /* Standard sidebar width */
+    }
+
+    .main-content {
+        flex: 1; /* Main content takes up remaining space */
+        padding: 20px; /* Standard padding */
+        padding-top: 0;
+        margin: 0 auto; /* Center content within its flex area */
+    }
+
+    .search-bar-pc {
+        display: flex; /* Show search bar on header */
+    }
+
+    .profile-anonymous {
+        margin-right: 0;
+    }
+
+    /* Center specific sections within main-content if desired */
+    .create-post-section,
+    .post-card,
+    .explore-search {
+        max-width: 600px; /* Keep posts/input centered and readable width */
+        width: 100%;
+    }
+}
+/* Donate Pages Specific */
+.donate-coffee-page,
+.donate-custom-page {
+    /* Inherits .page-card styles */
+}
+
+.donate-image {
+    max-width: 150px; /* Lebih besar dari sebelumnya */
+    height: auto;
+    border-radius: 50%; /* Membuat gambar bulat */
+    margin: 25px auto 35px auto; /* Margin lebih besar */
+    display: block;
+    box-shadow: 0 6px 15px var(--shadow-color); /* Bayangan menarik */
+    transition: transform 0.3s ease;
+}
+
+.donate-image:hover {
+    transform: scale(1.05); /* Efek zoom saat hover */
+}
+
+.donate-amount-options {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Jarak antar tombol lebih besar */
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.donate-amount-options .amount-button {
+    background-color: var(--secondary-bg); /* Background putih/terang */
+    color: var(--accent-color); /* Teks warna aksen */
+    border: 2px solid var(--accent-color); /* Border warna aksen */
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.0em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.donate-amount-options .amount-button:hover {
+    background-color: var(--accent-color); /* Background warna aksen saat hover */
+    color: var(--button-text); /* Teks putih saat hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.donate-amount-options .amount-button.selected { /* Opsional: untuk menandai tombol terpilih */
+    background-color: var(--accent-color);
+    color: var(--button-text);
+    border-color: var(--accent-color);
+}
+
+.custom-amount-input,
+.donate-form input[type="number"],
+.donate-form input[type="text"],
+.donate-form textarea {
+    width: calc(100% - 30px); /* Adjust for padding */
+    max-width: 350px; /* Lebar maksimum yang lebih luas */
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--tertiary-bg); /* Background abu-abu muda */
+    color: var(--text-color);
+    font-size: 1.05em;
+    text-align: center; /* Input angka di tengah */
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* Bayangan dalam */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-amount-input:focus,
+.donate-form input[type="number"]:focus,
+.donate-form input[type="text"]:focus,
+.donate-form textarea:focus {
+    border-color: var(--accent-color);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05), 0 0 0 3px rgba(24, 119, 242, 0.2); /* Fokus dengan border aksen */
+    outline: none;
+}
+
+.donate-form label {
+    display: block;
+    text-align: left;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.donate-form textarea {
+    min-height: 90px; /* Tinggi minimum textarea */
+}
+
+.thank-you-message {
+    margin-top: 30px;
+    font-style: italic;
+    color: var(--light-text-color);
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.thank-you-message i {
+    color: var(--accent-color); /* Ikon di pesan terima kasih */
+    font-size: 1.4em;
+}
+/* Help Center & About Us Specific */
+.help-center-page,
+.about-us-page {
+    /* Inherits .page-card styles */
+    text-align: left; /* Mengatur kembali teks ke kiri */
+}
+
+.faq-section,
+.contact-section,
+.about-us-page p {
+    margin-top: 30px;
+    line-height: 1.6;
+}
+
+.faq-section h3,
+.contact-section h3 {
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    font-size: 1.8em; /* Ukuran judul sub-bagian */
+    font-weight: bold;
+    border-bottom: 2px solid var(--tertiary-bg); /* Border bawah yang lebih menonjol */
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.faq-section h3 i,
+.contact-section h3 i {
+    color: var(--accent-color);
+    font-size: 1.2em; /* Ukuran ikon judul sub-bagian */
+}
+
+.faq-item {
+    background-color: var(--secondary-bg);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.faq-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.faq-item h4 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.faq-item h4 i { /* Ikon untuk FAQ item, misalnya panah */
+    font-size: 0.9em;
+    color: var(--light-text-color);
+}
+
+.faq-item p {
+    color: var(--light-text-color);
+    line-height: 1.6;
+    margin-top: 10px; /* Jarak dari judul FAQ item */
+    font-size: 1em;
+}
+
+.contact-section p {
+    margin-bottom: 12px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.05em;
+}
+
+.contact-section p i {
+    color: var(--accent-color);
+    font-size: 1.3em;
+}
+
+.contact-section a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.contact-section a:hover {
+    text-decoration: underline;
+    color: var(--accent-hover);
+}
+
+.about-us-page p {
+    margin-bottom: 15px;
+    color: var(--light-text-color);
+}
+
+.social-links {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.social-links a {
+    font-size: 2.5em; /* Ukuran ikon sosial lebih besar */
+    color: var(--light-text-color);
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.social-links a:hover {
+    color: var(--accent-color); /* Warna aksen saat hover */
+    transform: translateY(-5px) rotate(5deg); /* Efek melayang dan sedikit berputar */
+}
+
+/* Responsiveness adjustments for smaller screens */
+@media (max-width: 768px) {
+    .page-card {
+        padding: 20px;
+        margin: 15px;
+    }
+
+    .page-card h2 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+
+    .donate-amount-options {
+        flex-direction: column; /* Tombol donasi di tumpuk */
+        align-items: center;
+        gap: 10px;
+    }
+
+    .donate-amount-options .amount-button {
+        width: 100%; /* Memenuhi lebar */
+        max-width: 250px; /* Batas lebar */
+    }
+
+    .custom-amount-input,
+    .donate-form input,
+    .donate-form textarea {
+        width: calc(100% - 20px); /* Kurangi padding */
+        max-width: none; /* Hilangkan max-width di mobile */
+    }
+
+    .faq-section h3,
+    .contact-section h3 {
+        font-size: 1.5em;
+    }
+
+    .faq-item {
+        padding: 15px;
+    }
+
+    .faq-item h4 {
+        font-size: 1.1em;
+    }
+
+    .social-links a {
+        font-size: 2em;
+    }
+}

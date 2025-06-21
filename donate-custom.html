@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WhatFun - Your Creative Hub</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+  <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+
+<div class="page-card donate-custom-page">
+    <h2>Donasi Kustom untuk WhatFun</h2>
+    <p>Berikan dukungan sesuai keinginan Anda. Setiap donasi, berapapun jumlahnya, sangat kami hargai!</p>
+    <img src="https://via.placeholder.com/150x150?text=Donasi" alt="Ilustrasi Donasi" class="donate-image">
+    <div class="donate-form">
+        <label for="customAmount">Jumlah Donasi (IDR):</label>
+        <input type="number" id="customAmount" placeholder="Masukkan jumlah" min="1000" required>
+        <label for="donorName">Nama (Opsional):</label>
+        <input type="text" id="donorName" placeholder="Nama Anda">
+        <label for="donorMessage">Pesan (Opsional):</label>
+        <textarea id="donorMessage" placeholder="Tinggalkan pesan Anda..." rows="3"></textarea>
+        <button class="donate-button" id="proceedCustomDonate"><i class="fas fa-hand-holding-heart"></i> Lanjutkan Donasi</button>
+    </div>
+    <p class="thank-you-message">Dukungan Anda berarti segalanya bagi kami!</p>
+</div>
+
+<script src="script.js"></script>
